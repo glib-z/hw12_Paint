@@ -5,9 +5,9 @@ import javafx.scene.canvas.GraphicsContext;
 public abstract class Figure implements Shape {
 
     GraphicsContext gc;
-    protected double x;
-    protected double y;
-    protected double size;
+    double x;
+    double y;
+    double size;
 
     Figure(GraphicsContext gc, double x, double y, double size) {
         this.gc = gc;

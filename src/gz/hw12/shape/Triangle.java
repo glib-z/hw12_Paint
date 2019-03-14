@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 
 public class Triangle extends Figure {
 
-    public static final int FIGCODE = 3;
+    //public static final int FIGCODE = 3;
 
     public Triangle(GraphicsContext gc, double x, double y, double size) {
         super(gc, x, y, size);

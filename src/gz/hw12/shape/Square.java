@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 
 public class Square extends Figure {
 
-    public static final int FIGCODE = 2;
+    //public static final int FIGCODE = 2;
 
     public Square(GraphicsContext gc, double x, double y, double size) {
         super(gc, x, y, size);
