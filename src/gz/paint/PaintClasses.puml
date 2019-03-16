@@ -1,0 +1,115 @@
+@startuml
+
+package "gz.paint" {
+    Main *-- Board
+    package "shape" {
+        Board *-- Figure
+        Shape <|.. Figure
+        Figure <|-- Ball
+        Figure <|-- Square
+        Figure <|-- Triangle
+        Figure <|-- Group
+    }
+    package "utills" {
+        Main *-- Logger
+    }
+}
+
+interface Shape {
+    move(dx, dy)
+    draw(fill)
+    zoom(ds)
+    getShapeID()
+    isPointed(mx, my)
+    add(figure)
+}
+
+abstract class Figure {
+    ~ GraphicsContext gc
+    ~ double x;
+    ~ double y;
+    ~ double size;
+    Figure(gc, x, y, size)
+    + move(dx, dy)
+    + abstract draw(fill)
+    + zoom(ds)
+    + abstract isPointed(x, y)
+    + abstract getShapeID()
+    + abstract add(figure)
+}
+
+class Ball {
+    - {static} short FIGCODE = 1
+    + Ball(gc, x, y, size)
+    + draw(fill)
+    + isPointed(mx, my)
+    + getShapeID()
+    + add(figure)
+}
+
+class Square {
+    - {static} short FIGCODE = 2
+    + Square(gc, x, y, size)
+    + draw(fill)
+    + isPointed(mx, my)
+    + getShapeID()
+    + add(figure)
+}
+
+class Triangle {
+    - {static} short FIGCODE = 3
+    + Triangle(gc, x, y, size)
+    + draw(fill)
+    + isPointed(mx, my)
+    + getShapeID()
+    + add(figure)
+}
+
+class Group {
+    - {static} short FIGCODE = 100
+    - List<Figure> groupShapes = new ArrayList<>()
+    + Group(gc, x, y, size)
+    + Group(gc, figure)
+    + move(dx, dy)
+    + draw(fill)
+    + zoom(ds)
+    + isPointed(x, y)
+    + getShapeID()
+    + add(figure)
+}
+
+class Board {
+    - int activeIndex;
+    - GraphicsContext gc;
+    - List<Figure> shapes = new ArrayList<>()
+    ~ Board(gc)
+    ~ addBall(gc)
+    ~ addSquare(gc)
+    ~ addTriangle(gc)
+    ~ delete()
+    ~ nextShape()
+    ~ move(dx, dy)
+    ~ changeSize(ds)
+    ~ draw()
+    - clean()
+    ~ merge(x, y, mrg)
+
+}
+
+class Main {
+    - {static} double SPEED
+    - {static} double GROW
+    - Board board;
+    + {static} main()
+    + start(primaryStage)
+    - registerOnMousePressListener(scene)
+}
+
+class Logger {
+    - {static} DateTimeFormatter FORMAT
+    + {static} log(String message)
+    + {static} log(int message)
+
+}
+
+@enduml

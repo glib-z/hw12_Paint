@@ -1,11 +1,11 @@
-package gz.hw12.shape;
+package gz.paint.shape;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class Triangle extends Figure {
 
-    //public static final int FIGCODE = 3;
+    private static final short FIGCODE = 3;
 
     public Triangle(GraphicsContext gc, double x, double y, double size) {
         super(gc, x, y, size);
@@ -39,4 +39,15 @@ public class Triangle extends Figure {
 
         return ((n1>0) && (n2>0) && (n3>0)) || ((n1<0) && (n2<0) && (n3<0));
     }
+
+    @Override
+    public int getShapeID() {
+        return FIGCODE;
+    }
+
+    @Override
+    public Boolean add(Figure figure) {
+        return false;
+    }
+
 }

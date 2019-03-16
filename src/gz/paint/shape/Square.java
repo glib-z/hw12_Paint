@@ -1,11 +1,11 @@
-package gz.hw12.shape;
+package gz.paint.shape;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class Square extends Figure {
 
-    //public static final int FIGCODE = 2;
+    private static final short FIGCODE = 2;
 
     public Square(GraphicsContext gc, double x, double y, double size) {
         super(gc, x, y, size);
@@ -26,4 +26,15 @@ public class Square extends Figure {
     public Boolean isPointed(int mx, int my) {
         return (Math.abs((int)(x - mx)) <= size / 2) && (Math.abs((int)(y - my)) <= size / 2);
     }
+
+    @Override
+    public int getShapeID() {
+        return FIGCODE;
+    }
+
+    @Override
+    public Boolean add(Figure figure) {
+        return false;
+    }
+
 }

@@ -15,7 +15,7 @@
  * в программе должны использоваться интерфейсы, абстрактные классы и наследование.
  */
 
-package gz.hw12;
+package gz.paint;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -23,7 +23,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import gz.hw12.utills.Logger;
+import gz.paint.utills.Logger;
 
 public class Main extends Application {
 
@@ -38,6 +38,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Paint");
+        primaryStage.setResizable(false);
 
         Canvas canvas = new Canvas();
         canvas.setWidth(800);

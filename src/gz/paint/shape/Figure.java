@@ -1,4 +1,4 @@
-package gz.hw12.shape;
+package gz.paint.shape;
 
 import javafx.scene.canvas.GraphicsContext;
 
@@ -8,6 +8,10 @@ public abstract class Figure implements Shape {
     double x;
     double y;
     double size;
+
+    Figure(){
+
+    }
 
     Figure(GraphicsContext gc, double x, double y, double size) {
         this.gc = gc;
@@ -35,5 +39,11 @@ public abstract class Figure implements Shape {
 
     @Override
     public abstract Boolean isPointed(int x, int y);
+
+    @Override
+    public abstract int getShapeID();
+
+    @Override
+    public abstract Boolean add(Figure figure);
 
 }

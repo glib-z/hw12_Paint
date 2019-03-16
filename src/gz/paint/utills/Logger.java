@@ -1,4 +1,4 @@
-package gz.hw12.utills;
+package gz.paint.utills;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

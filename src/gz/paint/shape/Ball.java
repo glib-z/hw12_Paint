@@ -1,11 +1,11 @@
-package gz.hw12.shape;
+package gz.paint.shape;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class Ball extends Figure {
 
-    //public static final int FIGCODE = 1;
+    private static final short FIGCODE = 1;
 
     public Ball(GraphicsContext gc, double x, double y, double size) {
         super(gc, x, y, size);
@@ -25,6 +25,16 @@ public class Ball extends Figure {
     @Override
     public Boolean isPointed(int mx, int my) {
         return Math.sqrt(Math.pow(x - mx, 2) + Math.pow(y - my, 2)) <= size / 2;
+    }
+
+    @Override
+    public int getShapeID() {
+        return FIGCODE;
+    }
+
+    @Override
+    public Boolean add(Figure figure) {
+        return false;
     }
 
 }
