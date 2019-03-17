@@ -103,6 +103,7 @@ class Board {
     - clean()
     ~ merge(x, y, mrg)
     - copyGroup(pIndex)
+    ~ saveBoardInfo()
 
 }
 

@@ -7,7 +7,7 @@
  * 5. (+) Агрегация: несколько фигур можно объединить в одну.
  * 6. (+) Фигуры можно клонировать.
  * 7. (+) Можно менять размер фигур.
- * 8. Реализовать сохраниение/загрузку в файл.
+ * 8. (+----) Реализовать сохраниение/загрузку в файл.
  * 9. При движении фигуры если она пересекается с другой фигурой менять у активной фигуры цвет.
  * 10. Движение по траектории. Фигура может запомнить по какой траектории ее двигали и воспроизвести.
  *
@@ -24,6 +24,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import gz.paint.utills.Logger;
+
+import java.io.IOException;
 
 public class Main extends Application {
 
@@ -58,42 +60,45 @@ public class Main extends Application {
 
         scene.setOnKeyPressed(event -> {
             switch (event.getCode()) {
-                case LEFT:
+                case LEFT:                                  // Move left
                     board.move(-SPEED, 0);
                     break;
-                case RIGHT:
+                case RIGHT:                                 // Move right
                     board.move(SPEED, 0);
                     break;
-                case UP:
+                case UP:                                    // Move up
                     board.move(0, -SPEED);
                     break;
-                case DOWN:
+                case DOWN:                                  // Move down
                     board.move(0, SPEED);
                     break;
-                case W:
+                case W:                                     // Zoom out
                     board.changeSize(GROW);
                     break;
-                case Q:
+                case Q:                                     // Zoom in
                     board.changeSize(-GROW);
                     break;
-                case DIGIT1:
+                case DIGIT1:                                // New Ball
                     board.addBall(gc);
                     break;
-                case DIGIT2:
+                case DIGIT2:                                // New  Square
                     board.addSquare(gc);
                     break;
-                case DIGIT3:
+                case DIGIT3:                                // New Triangle
                     board.addTriangle(gc);
                     break;
-                case CONTROL:
-                    break;
-                case SHIFT:
-                    break;
-                case TAB:
+                case TAB:                                   // Go to next shape
                     board.nextShape();
                     break;
-                case DELETE:
+                case DELETE:                                // Delete shape
                     board.delete();
+                    break;
+                case S:                                     // Save Board info
+                    try {
+                        board.saveBoardInfo();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     break;
             }
 

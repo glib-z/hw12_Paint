@@ -1,5 +1,6 @@
 package gz.paint.shape;
 
+import com.google.gson.JsonObject;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.util.ArrayList;
@@ -69,6 +70,16 @@ public class Group extends Figure {
     public Figure getShape(int index) {
         if (groupShapes.isEmpty() || (index >= groupShapes.size())) return null;
         return groupShapes.get(index);
+    }
+
+    @Override
+    public String getShapeInfo() {
+        JsonObject info = new JsonObject();
+        info.addProperty("shapeID", FIGCODE);
+        info.addProperty("X", x);
+        info.addProperty("Y", y);
+        info.addProperty("size", size);
+        return info.toString();
     }
 
 }

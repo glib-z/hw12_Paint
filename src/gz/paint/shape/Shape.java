@@ -17,8 +17,8 @@ public interface Shape {
     void draw(Boolean fill);
 
     /**
-     *
-     * @param ds
+     * Scaling the shape or set of shapes
+     * @param ds value (positive or negative) for change the size
      */
     void zoom(double ds);
 
@@ -73,9 +73,15 @@ public interface Shape {
 
     /**
      * Returns pointer to the shape with specified index in the Group.
-     * @param index
+     * @param index specify the shape in the Group
      * @return pointer to the shape with specified index in the Group.
      */
     Figure getShape(int index);
+
+    /**
+     *
+     * @return
+     */
+    String getShapeInfo();
 
 }

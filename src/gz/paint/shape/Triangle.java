@@ -1,5 +1,6 @@
 package gz.paint.shape;
 
+import com.google.gson.JsonObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -58,6 +59,16 @@ public class Triangle extends Figure {
     @Override
     public Figure getShape(int index) {
         return null;
+    }
+
+    @Override
+    public String getShapeInfo() {
+        JsonObject info = new JsonObject();
+        info.addProperty("shapeID", FIGCODE);
+        info.addProperty("X", x);
+        info.addProperty("Y", y);
+        info.addProperty("size", size);
+        return info.toString();
     }
 
 }

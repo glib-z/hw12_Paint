@@ -1,8 +1,11 @@
 package gz.paint;
 
+import com.google.gson.JsonObject;
+import com.google.gson.stream.JsonWriter;
 import gz.paint.shape.*;
 import javafx.scene.canvas.GraphicsContext;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,9 +78,10 @@ class Board {
         gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
     }
 
-
+    /*
+     * Mergin or cloning shapes.
+     */
     void merge(int x, int y, boolean mrg) {
-
         int pointedIndex = -1;
         for (int i = 0; i < shapes.size(); i++) {
             if (shapes.get(i).isPointed(x, y)) {
@@ -85,7 +89,6 @@ class Board {
             }
         }
         if (pointedIndex == -1) return;                 // No one figure is pointed
-
         /* The merging section */
         if ((pointedIndex != activeIndex) && mrg) {
             int activID = shapes.get(activeIndex).getShapeID();
@@ -119,7 +122,6 @@ class Board {
                 }
             }
         }
-
         /* The cloning section */
         if (!mrg) {
             double cX = shapes.get(pointedIndex).getX();
@@ -143,9 +145,7 @@ class Board {
             }
             shapes.get(activeIndex).move(3, 3);
         }
-
         draw();
-
     }
 
     private void copyGroup(int pIndex) {
@@ -165,6 +165,25 @@ class Board {
                     break;
             }
         }
+    }
+
+    void saveBoardInfo() throws IOException {
+        String boardInfo = new String();
+        for (Figure shape : shapes) {
+            if (shape.getShapeID() != 0) {
+                boardInfo += shape.getShapeInfo();
+            } else {
+                boardInfo += "{GroupSTART}";
+                for (int k = 0; k < shape.getPullSize(); k++) {
+                    boardInfo += shape.getShape(k).getShapeInfo();
+                }
+                boardInfo += "{GroupEND}";
+            }
+        }
+        System.out.println(boardInfo);
+        FileWriter f = new FileWriter("save.txt");
+        f.write(boardInfo);
+        f.close();
     }
 
 }

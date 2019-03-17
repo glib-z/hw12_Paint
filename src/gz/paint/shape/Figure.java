@@ -63,4 +63,7 @@ public abstract class Figure implements Shape {
     @Override
     public abstract Figure getShape(int index);
 
+    @Override
+    public abstract String getShapeInfo();
+
 }
