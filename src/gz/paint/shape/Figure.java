@@ -9,10 +9,6 @@ public abstract class Figure implements Shape {
     double y;
     double size;
 
-    Figure(){
-
-    }
-
     Figure(GraphicsContext gc, double x, double y, double size) {
         this.gc = gc;
         this.x = x;
@@ -45,5 +41,26 @@ public abstract class Figure implements Shape {
 
     @Override
     public abstract Boolean add(Figure figure);
+
+    @Override
+    public double getX() {
+        return x;
+    }
+
+    @Override
+    public double getY() {
+        return y;
+    }
+
+    @Override
+    public double getSize() {
+        return size;
+    }
+
+    @Override
+    public abstract int getPullSize();
+
+    @Override
+    public abstract Figure getShape(int index);
 
 }

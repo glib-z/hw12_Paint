@@ -69,13 +69,6 @@ class Board {
         for (int i = 0; i < shapes.size(); i++) {
             shapes.get(i).draw(i == activeIndex);
         }
-
-        // Temporary code
-        System.out.printf("Board status: activeIndex=%d\n", activeIndex);
-        for (int i = 0; i < shapes.size(); i++) {
-            System.out.printf("shape[%d]: getShapeID=%d\n", i, shapes.get(i).getShapeID());
-        }
-
     }
 
     private void clean() {
@@ -93,16 +86,12 @@ class Board {
         }
         if (pointedIndex == -1) return;                 // No one figure is pointed
 
-        System.out.printf("activeIndex: %d, pointedIndex: %d.\n", activeIndex, pointedIndex);
-
         /* The merging section */
         if ((pointedIndex != activeIndex) && mrg) {
-            if (shapes.get(activeIndex).add(shapes.get(pointedIndex))) {        // Adding selected figure into existing Group
-                shapes.remove(pointedIndex);                                    // Removing the link from the board list
-                if (activeIndex > pointedIndex) {
-                    activeIndex--;                                              // Correcting the activeIndex
-                }
-            } else {
+            int activID = shapes.get(activeIndex).getShapeID();
+            int pointedID = shapes.get(pointedIndex).getShapeID();
+
+            if ((activID != 0) && (pointedID != 0)) {
                 shapes.add(new Group(gc, shapes.get(activeIndex)));             // Creating a new Group with active figure
                 shapes.get(shapes.size() - 1).add(shapes.get(pointedIndex));    // Adding pointed figure
                 if (activeIndex > pointedIndex) {                               // Detecting a bigger index
@@ -112,16 +101,70 @@ class Board {
                     shapes.remove(pointedIndex);
                     shapes.remove(activeIndex);
                 }
-                activeIndex = shapes.size() - 1;                                // Correcting the activeIndex
+                activeIndex = shapes.size() - 1;                                // New activeIndex
+            } else {
+                if ((activID == 0) && (pointedID == 0)) {
+                    copyGroup(pointedIndex);         // Copying of all figures from the pointed Group to the active Group
+                } else {
+                    if (activID != 0) {
+                        int i = activeIndex;
+                        activeIndex = pointedIndex;
+                        pointedIndex = i;
+                    }
+                    shapes.get(activeIndex).add(shapes.get(pointedIndex));      // Adding simple figure to the Group
+                }
+                shapes.remove(pointedIndex);                                    // Removing the Group from the board list
+                if (activeIndex > pointedIndex) {
+                    activeIndex--;                                              // New activeIndex
+                }
             }
-            draw();
         }
 
         /* The cloning section */
-        if ((pointedIndex == activeIndex) && !mrg) {
-
-
+        if (!mrg) {
+            double cX = shapes.get(pointedIndex).getX();
+            double cY = shapes.get(pointedIndex).getY();
+            double cSize = shapes.get(pointedIndex).getSize();
+            activeIndex = shapes.size();                 // The activeIndex is preset for the new Group (OUT OF BOUND !!!)
+            switch (shapes.get(pointedIndex).getShapeID()) {
+                case 1: /* Ball */
+                    shapes.add(new Ball(gc, cX, cY, cSize));
+                    break;
+                case 2: /* Square */
+                    shapes.add(new Square(gc, cX, cY, cSize));
+                    break;
+                case 3: /* Triangle */
+                    shapes.add(new Triangle(gc, cX, cY, cSize));
+                    break;
+                case 0: /* Set of shapes */
+                    shapes.add(new Group(gc, 0, 0, 0));              // Creating a new empty Group
+                    copyGroup(pointedIndex);
+                    break;
+            }
+            shapes.get(activeIndex).move(3, 3);
         }
 
+        draw();
+
     }
+
+    private void copyGroup(int pIndex) {
+        for (int i = 0; i < shapes.get(pIndex).getPullSize(); i++) {
+            double cX = shapes.get(pIndex).getShape(i).getX();
+            double cY = shapes.get(pIndex).getShape(i).getY();
+            double cSize = shapes.get(pIndex).getShape(i).getSize();
+            switch (shapes.get(pIndex).getShape(i).getShapeID()) {
+                case 1:
+                    shapes.get(activeIndex).add(new Ball(gc, cX, cY, cSize));
+                    break;
+                case 2:
+                    shapes.get(activeIndex).add(new Square(gc, cX, cY, cSize));
+                    break;
+                case 3:
+                    shapes.get(activeIndex).add(new Triangle(gc, cX, cY, cSize));
+                    break;
+            }
+        }
+    }
+
 }

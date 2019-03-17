@@ -37,4 +37,14 @@ public class Square extends Figure {
         return false;
     }
 
+    @Override
+    public int getPullSize() {
+        return 0;
+    }
+
+    @Override
+    public Figure getShape(int index) {
+        return null;
+    }
+
 }

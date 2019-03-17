@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Group extends Figure {
 
-    private static final short FIGCODE = 100;
+    private static final short FIGCODE = 0;
 
     private List<Figure> groupShapes = new ArrayList<>();
 
@@ -58,6 +58,17 @@ public class Group extends Figure {
     public Boolean add(Figure figure) {
         groupShapes.add(figure);
         return true;
+    }
+
+    @Override
+    public int getPullSize() {
+        return groupShapes.size();
+    }
+
+    @Override
+    public Figure getShape(int index) {
+        if (groupShapes.isEmpty() || (index >= groupShapes.size())) return null;
+        return groupShapes.get(index);
     }
 
 }

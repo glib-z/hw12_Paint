@@ -22,6 +22,11 @@ interface Shape {
     getShapeID()
     isPointed(mx, my)
     add(figure)
+    getX()
+    getY()
+    getSize()
+    getPullSize()
+    getShape(index)
 }
 
 abstract class Figure {
@@ -36,6 +41,11 @@ abstract class Figure {
     + abstract isPointed(x, y)
     + abstract getShapeID()
     + abstract add(figure)
+    + getX()
+    + getY()
+    + getSize()
+    + abstract getPullSize()
+    + abstract getShape(index)
 }
 
 class Ball {
@@ -44,7 +54,6 @@ class Ball {
     + draw(fill)
     + isPointed(mx, my)
     + getShapeID()
-    + add(figure)
 }
 
 class Square {
@@ -53,7 +62,6 @@ class Square {
     + draw(fill)
     + isPointed(mx, my)
     + getShapeID()
-    + add(figure)
 }
 
 class Triangle {
@@ -62,7 +70,6 @@ class Triangle {
     + draw(fill)
     + isPointed(mx, my)
     + getShapeID()
-    + add(figure)
 }
 
 class Group {
@@ -76,6 +83,8 @@ class Group {
     + isPointed(x, y)
     + getShapeID()
     + add(figure)
+    + getPullSize()
+    + getShape(index)
 }
 
 class Board {
@@ -93,6 +102,7 @@ class Board {
     ~ draw()
     - clean()
     ~ merge(x, y, mrg)
+    - copyGroup(pIndex)
 
 }
 
