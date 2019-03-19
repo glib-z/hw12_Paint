@@ -17,10 +17,11 @@ public class Square extends Figure {
         if (fill) {
             gc.setFill(Color.GREEN);
             gc.fillRect(x - size / 2, y - size / 2, size, size);
+        } else {
+            gc.setStroke(Color.GREEN);
+            gc.setLineWidth(2);
+            gc.strokeRect(x - size / 2, y - size / 2, size, size);
         }
-        gc.setStroke(Color.GREEN);
-        gc.setLineWidth(2);
-        gc.strokeRect(x - size / 2, y - size / 2, size, size);
     }
 
     @Override

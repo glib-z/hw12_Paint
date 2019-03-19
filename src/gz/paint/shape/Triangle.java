@@ -18,11 +18,12 @@ public class Triangle extends Figure {
             gc.setFill(Color.BLACK);
             gc.fillPolygon(new double[]{x, (x - size / 2), (x + size / 2)},
                     new double[]{(y - size / 2), (y + size / 2), (y + size / 2)}, 3);
+        } else {
+            gc.setStroke(Color.BLACK);
+            gc.setLineWidth(2);
+            gc.strokePolygon(new double[]{x, (x - size / 2), (x + size / 2)},
+                    new double[]{(y - size / 2), (y + size / 2), (y + size / 2)}, 3);
         }
-        gc.setStroke(Color.BLACK);
-        gc.setLineWidth(2);
-        gc.strokePolygon(new double[]{x, (x - size / 2), (x + size / 2)},
-                new double[]{(y - size / 2), (y + size / 2), (y + size / 2)}, 3);
     }
 
     @Override

@@ -17,10 +17,11 @@ public class Ball extends Figure {
         if (fill) {
             gc.setFill(Color.RED);
             gc.fillOval(x - size / 2, y - size / 2, size, size);
+        } else {
+            gc.setStroke(Color.RED);
+            gc.setLineWidth(2);
+            gc.strokeOval(x - size / 2, y - size / 2, size, size);
         }
-        gc.setStroke(Color.RED);
-        gc.setLineWidth(2);
-        gc.strokeOval(x - size / 2, y - size / 2, size, size);
     }
 
     @Override
