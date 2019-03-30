@@ -12,12 +12,12 @@ public class Group extends Figure {
 
     private List<Figure> groupShapes = new ArrayList<>();
 
-    public Group(GraphicsContext gc, double x, double y, double size) {
-        super(gc, x, y, size);
+    public Group(GraphicsContext gc, double x, double y, double size, double angle) {
+        super(gc, x, y, size, angle);
     }
 
     public Group(GraphicsContext gc, Figure figure) {
-        super(gc, figure.x, figure.y, figure.size);
+        super(gc, figure.x, figure.y, figure.size, figure.angle);
         groupShapes.add(figure);
     }
 
@@ -43,7 +43,7 @@ public class Group extends Figure {
     }
 
     @Override
-    public Boolean isPointed(int x, int y) {
+    public boolean isPointed(int x, int y) {
         for (Figure groupShape : groupShapes) {
             if (groupShape.isPointed(x, y)) return true;
         }
@@ -73,7 +73,7 @@ public class Group extends Figure {
     }
 
     @Override
-    public String getShapeInfo() {
+    public java.lang.String getShapeInfo() {
         JsonObject info = new JsonObject();
         info.addProperty("shapeID", FIGCODE);
         info.addProperty("X", x);

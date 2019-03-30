@@ -8,26 +8,31 @@ public class Triangle extends Figure {
 
     private static final short FIGCODE = 3;
 
-    public Triangle(GraphicsContext gc, double x, double y, double size) {
-        super(gc, x, y, size);
+    public Triangle(GraphicsContext gc, double x, double y, double size, double angle) {
+        super(gc, x, y, size, angle);
     }
 
     @Override
     public void draw(Boolean fill) {
+        double x1 = x + size * Math.cos(angle) * 2 / 3;
+        double y1 = y - size * Math.sin(angle) * 2 / 3;
+        double x2 = x + size * Math.cos(angle + Math.PI * 2 / 3) * 2 / 3;
+        double y2 = y - size * Math.sin(angle + Math.PI * 2 / 3) * 2 / 3;
+        double x3 = x + size * Math.cos(angle + Math.PI * 4 / 3) * 2 / 3;
+        double y3 = y - size * Math.sin(angle + Math.PI * 4 / 3) * 2 / 3;
+
         if (fill) {
             gc.setFill(Color.BLACK);
-            gc.fillPolygon(new double[]{x, (x - size / 2), (x + size / 2)},
-                    new double[]{(y - size / 2), (y + size / 2), (y + size / 2)}, 3);
+            gc.fillPolygon(new double[]{x1, x2, x3}, new double[]{y1, y2, y3}, 3);
         } else {
             gc.setStroke(Color.BLACK);
             gc.setLineWidth(2);
-            gc.strokePolygon(new double[]{x, (x - size / 2), (x + size / 2)},
-                    new double[]{(y - size / 2), (y + size / 2), (y + size / 2)}, 3);
+            gc.strokePolygon(new double[]{x1, x2, x3}, new double[]{y1, y2, y3}, 3);
         }
     }
 
     @Override
-    public Boolean isPointed(int mx, int my) {
+    public boolean isPointed(int mx, int my) {
         int aX = (int) x;
         int aY = (int) (y - size / 2);
         int bX = (int) (x - size / 2);
@@ -63,7 +68,7 @@ public class Triangle extends Figure {
     }
 
     @Override
-    public String getShapeInfo() {
+    public java.lang.String getShapeInfo() {
         JsonObject info = new JsonObject();
         info.addProperty("shapeID", FIGCODE);
         info.addProperty("X", x);

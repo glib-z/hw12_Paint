@@ -1,10 +1,7 @@
 package gz.paint;
 
-import com.google.gson.JsonObject;
-import com.google.gson.stream.JsonWriter;
 import gz.paint.shape.*;
 import javafx.scene.canvas.GraphicsContext;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,19 +19,19 @@ class Board {
 
     void addBall(GraphicsContext gc) {
         this.gc = gc;
-        shapes.add(new Ball(gc, 15, 15, 30));
+        shapes.add(new Ball(gc, 15, 15, 30, 0));
         activeIndex = shapes.size() - 1;
     }
 
     void addSquare(GraphicsContext gc) {
         this.gc = gc;
-        shapes.add(new Square(gc, 15, 15, 30));
+        shapes.add(new Square(gc, 15, 15, 30, 0));
         activeIndex = shapes.size() - 1;
     }
 
     void addTriangle(GraphicsContext gc) {
         this.gc = gc;
-        shapes.add(new Triangle(gc, 15, 15, 30));
+        shapes.add(new Triangle(gc, 15, 20, 30, Math.PI / 2));
         activeIndex = shapes.size() - 1;
     }
 
@@ -61,6 +58,12 @@ class Board {
         }
     }
 
+    void rotate(double dAnge) {
+        if (!shapes.isEmpty()) {                                // Check if some figure exist
+            shapes.get(activeIndex).rotate(dAnge);
+        }
+    }
+
     void changeSize(double ds) {
         if (!shapes.isEmpty()) {                                // Check if some gz.paint.shape exist
             shapes.get(activeIndex).zoom(ds);
@@ -79,9 +82,11 @@ class Board {
     }
 
     /*
-     * Mergin or cloning shapes.
+     * Merging or cloning shapes.
      */
     void merge(int x, int y, boolean mrg) {
+
+        // Detecting if any figure is pointed
         int pointedIndex = -1;
         for (int i = 0; i < shapes.size(); i++) {
             if (shapes.get(i).isPointed(x, y)) {
@@ -89,6 +94,7 @@ class Board {
             }
         }
         if (pointedIndex == -1) return;                 // No one figure is pointed
+
         /* The merging section */
         if ((pointedIndex != activeIndex) && mrg) {
             int activID = shapes.get(activeIndex).getShapeID();
@@ -122,24 +128,26 @@ class Board {
                 }
             }
         }
+
         /* The cloning section */
         if (!mrg) {
             double cX = shapes.get(pointedIndex).getX();
             double cY = shapes.get(pointedIndex).getY();
             double cSize = shapes.get(pointedIndex).getSize();
+            double cAngle = shapes.get(pointedIndex).getAngle();
             activeIndex = shapes.size();                 // The activeIndex is preset for the new Group (OUT OF BOUND !!!)
             switch (shapes.get(pointedIndex).getShapeID()) {
                 case 1: /* Ball */
-                    shapes.add(new Ball(gc, cX, cY, cSize));
+                    shapes.add(new Ball(gc, cX, cY, cSize, cAngle));
                     break;
                 case 2: /* Square */
-                    shapes.add(new Square(gc, cX, cY, cSize));
+                    shapes.add(new Square(gc, cX, cY, cSize, cAngle));
                     break;
                 case 3: /* Triangle */
-                    shapes.add(new Triangle(gc, cX, cY, cSize));
+                    shapes.add(new Triangle(gc, cX, cY, cSize, cAngle));
                     break;
                 case 0: /* Set of shapes */
-                    shapes.add(new Group(gc, 0, 0, 0));              // Creating a new empty Group
+                    shapes.add(new Group(gc, 0, 0, 0, 0));        // Creating a new empty Group
                     copyGroup(pointedIndex);
                     break;
             }
@@ -153,15 +161,16 @@ class Board {
             double cX = shapes.get(pIndex).getShape(i).getX();
             double cY = shapes.get(pIndex).getShape(i).getY();
             double cSize = shapes.get(pIndex).getShape(i).getSize();
+            double cAngle = shapes.get(pIndex).getAngle();
             switch (shapes.get(pIndex).getShape(i).getShapeID()) {
                 case 1:
-                    shapes.get(activeIndex).add(new Ball(gc, cX, cY, cSize));
+                    shapes.get(activeIndex).add(new Ball(gc, cX, cY, cSize, cAngle));
                     break;
                 case 2:
-                    shapes.get(activeIndex).add(new Square(gc, cX, cY, cSize));
+                    shapes.get(activeIndex).add(new Square(gc, cX, cY, cSize, cAngle));
                     break;
                 case 3:
-                    shapes.get(activeIndex).add(new Triangle(gc, cX, cY, cSize));
+                    shapes.get(activeIndex).add(new Triangle(gc, cX, cY, cSize, cAngle));
                     break;
             }
         }

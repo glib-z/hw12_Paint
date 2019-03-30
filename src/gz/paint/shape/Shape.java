@@ -9,6 +9,9 @@ public interface Shape {
      */
     void move(double dx, double dy);
 
+
+    void rotate(double dAngle);
+
     /**
      * Rendering the shape.
      * @param fill true - shape is filled
@@ -37,7 +40,7 @@ public interface Shape {
      * @param my Y-position of mouse pointer
      * @return  true if mouse pointer coordinates within the shape
      */
-    Boolean isPointed(int mx, int my);
+    boolean isPointed(int mx, int my);
 
     /**
      * Adds specified shape to Set of shapes.
@@ -65,6 +68,9 @@ public interface Shape {
      */
     double getSize();
 
+
+    double getAngle();
+
     /**
      * Returns quantity of shapes in the Group.
      * @return quantity of shapes in the Group
@@ -82,6 +88,6 @@ public interface Shape {
      *
      * @return
      */
-    String getShapeInfo();
+    java.lang.String getShapeInfo();
 
 }

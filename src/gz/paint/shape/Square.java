@@ -8,24 +8,36 @@ public class Square extends Figure {
 
     private static final short FIGCODE = 2;
 
-    public Square(GraphicsContext gc, double x, double y, double size) {
-        super(gc, x, y, size);
+    public Square(GraphicsContext gc, double x, double y, double size, double angle) {
+        super(gc, x, y, size, angle);
     }
 
     @Override
     public void draw(Boolean fill) {
+
+        double x1 = x + size * Math.cos(angle + Math.PI / 4) / Math.sqrt(2);
+        double y1 = y - size * Math.sin(angle + Math.PI / 4) / Math.sqrt(2);
+        double x2 = x + size * Math.cos(angle + Math.PI * 3 / 4) / Math.sqrt(2);
+        double y2 = y - size * Math.sin(angle + Math.PI * 3 / 4) / Math.sqrt(2);
+        double x3 = x + size * Math.cos(angle + Math.PI * 5 / 4) / Math.sqrt(2);
+        double y3 = y - size * Math.sin(angle + Math.PI * 5 / 4) / Math.sqrt(2);
+        double x4 = x + size * Math.cos(angle + Math.PI * 7 / 4) / Math.sqrt(2);
+        double y4 = y - size * Math.sin(angle + Math.PI * 7 / 4) / Math.sqrt(2);
+
         if (fill) {
             gc.setFill(Color.GREEN);
-            gc.fillRect(x - size / 2, y - size / 2, size, size);
+            //gc.fillRect(x - size / 2, y - size / 2, size, size);
+            gc.fillPolygon(new double[]{x1, x2, x3, x4}, new double[]{y1, y2, y3, y4}, 4);
         } else {
             gc.setStroke(Color.GREEN);
             gc.setLineWidth(2);
-            gc.strokeRect(x - size / 2, y - size / 2, size, size);
+            //gc.strokeRect(x - size / 2, y - size / 2, size, size);
+            gc.strokePolygon(new double[]{x1, x2, x3, x4}, new double[]{y1, y2, y3, y4}, 4);
         }
     }
 
     @Override
-    public Boolean isPointed(int mx, int my) {
+    public boolean isPointed(int mx, int my) {
         return (Math.abs((int)(x - mx)) <= size / 2) && (Math.abs((int)(y - my)) <= size / 2);
     }
 
@@ -50,7 +62,7 @@ public class Square extends Figure {
     }
 
     @Override
-    public String getShapeInfo() {
+    public java.lang.String getShapeInfo() {
         JsonObject info = new JsonObject();
         info.addProperty("shapeID", FIGCODE);
         info.addProperty("X", x);

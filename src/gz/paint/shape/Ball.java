@@ -8,8 +8,8 @@ public class Ball extends Figure {
 
     private static final short FIGCODE = 1;
 
-    public Ball(GraphicsContext gc, double x, double y, double size) {
-        super(gc, x, y, size);
+    public Ball(GraphicsContext gc, double x, double y, double size, double angle) {
+        super(gc, x, y, size, angle);
     }
 
     @Override
@@ -25,7 +25,7 @@ public class Ball extends Figure {
     }
 
     @Override
-    public Boolean isPointed(int mx, int my) {
+    public boolean isPointed(int mx, int my) {
         return Math.sqrt(Math.pow(x - mx, 2) + Math.pow(y - my, 2)) <= size / 2;
     }
 

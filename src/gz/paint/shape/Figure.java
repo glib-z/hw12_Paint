@@ -8,12 +8,14 @@ public abstract class Figure implements Shape {
     double x;
     double y;
     double size;
+    double angle;
 
-    Figure(GraphicsContext gc, double x, double y, double size) {
+    Figure(GraphicsContext gc, double x, double y, double size, double angle) {
         this.gc = gc;
         this.x = x;
         this.y = y;
         this.size = size;
+        this.angle = angle;
     }
 
     @Override
@@ -23,18 +25,23 @@ public abstract class Figure implements Shape {
     }
 
     @Override
+    public void rotate(double dAngle) {
+        angle += dAngle;
+    }
+
+    @Override
     public abstract void draw(Boolean fill);
 
     @Override
     public void zoom(double ds) {
-        size += ds;
+        size *= ds;
         if (size < 1) {
             size = 1;
         }
     }
 
     @Override
-    public abstract Boolean isPointed(int x, int y);
+    public abstract boolean isPointed(int x, int y);
 
     @Override
     public abstract int getShapeID();
@@ -58,12 +65,17 @@ public abstract class Figure implements Shape {
     }
 
     @Override
+    public double getAngle() {
+        return angle;
+    }
+
+    @Override
     public abstract int getPullSize();
 
     @Override
     public abstract Figure getShape(int index);
 
     @Override
-    public abstract String getShapeInfo();
+    public abstract java.lang.String getShapeInfo();
 
 }

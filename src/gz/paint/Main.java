@@ -29,8 +29,9 @@ import java.io.IOException;
 
 public class Main extends Application {
 
-    private static final double SPEED = 3;
-    private static final double GROW = 3;
+    private static final double SPEED = 2;
+    private static final double GROW = 1.02;
+    private static final double DANGLE = Math.PI / 180;
     private Board board;
 
     public static void main(String[] args) {
@@ -72,11 +73,17 @@ public class Main extends Application {
                 case DOWN:                                  // Move down
                     board.move(0, SPEED);
                     break;
+                case R:                                     // Rotate
+                    board.rotate(DANGLE);
+                    break;
+                case F:                                     // Rotate clockwise
+                    board.rotate(-DANGLE);
+                    break;
                 case W:                                     // Zoom out
                     board.changeSize(GROW);
                     break;
                 case Q:                                     // Zoom in
-                    board.changeSize(-GROW);
+                    board.changeSize(1 / GROW);
                     break;
                 case DIGIT1:                                // New Ball
                     board.addBall(gc);
