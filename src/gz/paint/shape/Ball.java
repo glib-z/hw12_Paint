@@ -59,4 +59,10 @@ public class Ball extends Figure {
         return info.toString();
     }
 
+    @Override
+    public double getWeight() {
+        return Math.PI * size *size / 4;
+    }
+
+
 }

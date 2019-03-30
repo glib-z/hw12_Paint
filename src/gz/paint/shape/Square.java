@@ -26,12 +26,10 @@ public class Square extends Figure {
 
         if (fill) {
             gc.setFill(Color.GREEN);
-            //gc.fillRect(x - size / 2, y - size / 2, size, size);
             gc.fillPolygon(new double[]{x1, x2, x3, x4}, new double[]{y1, y2, y3, y4}, 4);
         } else {
             gc.setStroke(Color.GREEN);
             gc.setLineWidth(2);
-            //gc.strokeRect(x - size / 2, y - size / 2, size, size);
             gc.strokePolygon(new double[]{x1, x2, x3, x4}, new double[]{y1, y2, y3, y4}, 4);
         }
     }
@@ -69,6 +67,11 @@ public class Square extends Figure {
         info.addProperty("Y", y);
         info.addProperty("size", size);
         return info.toString();
+    }
+
+    @Override
+    public double getWeight() {
+        return size * size;
     }
 
 }

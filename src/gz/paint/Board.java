@@ -81,7 +81,7 @@ class Board {
         gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
     }
 
-    /*
+    /**
      * Merging or cloning shapes.
      */
     void merge(int x, int y, boolean mrg) {
@@ -97,10 +97,10 @@ class Board {
 
         /* The merging section */
         if ((pointedIndex != activeIndex) && mrg) {
-            int activID = shapes.get(activeIndex).getShapeID();
+            int activeID = shapes.get(activeIndex).getShapeID();
             int pointedID = shapes.get(pointedIndex).getShapeID();
 
-            if ((activID != 0) && (pointedID != 0)) {
+            if ((activeID != 0) && (pointedID != 0)) {
                 shapes.add(new Group(gc, shapes.get(activeIndex)));             // Creating a new Group with active figure
                 shapes.get(shapes.size() - 1).add(shapes.get(pointedIndex));    // Adding pointed figure
                 if (activeIndex > pointedIndex) {                               // Detecting a bigger index
@@ -112,10 +112,10 @@ class Board {
                 }
                 activeIndex = shapes.size() - 1;                                // New activeIndex
             } else {
-                if ((activID == 0) && (pointedID == 0)) {
+                if ((activeID == 0) && (pointedID == 0)) {
                     copyGroup(pointedIndex);         // Copying of all figures from the pointed Group to the active Group
                 } else {
-                    if (activID != 0) {
+                    if (activeID != 0) {
                         int i = activeIndex;
                         activeIndex = pointedIndex;
                         pointedIndex = i;

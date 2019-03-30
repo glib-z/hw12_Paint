@@ -9,7 +9,10 @@ public interface Shape {
      */
     void move(double dx, double dy);
 
-
+    /**
+     * Rotates shape
+     * @param dAngle value for increase/decrease the angle of shape
+     */
     void rotate(double dAngle);
 
     /**
@@ -63,6 +66,18 @@ public interface Shape {
     double getY();
 
     /**
+     * Set new X-position of shape.
+     * @param newX X-position of shape
+     */
+    void setX(double newX);
+
+    /**
+     * Set new Y-position of shape.
+     * @param NewY new Y-position of shape
+     */
+    void setY(double NewY);
+
+    /**
      * Returns size of the shape. For Set of shapes value is not actual.
      * @return size of the shape
      */
@@ -89,5 +104,11 @@ public interface Shape {
      * @return
      */
     java.lang.String getShapeInfo();
+
+    /**
+     * Returns value of weight for the shape.
+     * @return value of weight for the shape
+     */
+    double getWeight();
 
 }

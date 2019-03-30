@@ -77,4 +77,9 @@ public class Triangle extends Figure {
         return info.toString();
     }
 
+    @Override
+    public double getWeight() {
+        return size * size * Math.sin(Math.PI / 6);
+    }
+
 }

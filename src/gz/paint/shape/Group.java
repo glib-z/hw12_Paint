@@ -2,7 +2,6 @@ package gz.paint.shape;
 
 import com.google.gson.JsonObject;
 import javafx.scene.canvas.GraphicsContext;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,17 +20,41 @@ public class Group extends Figure {
         groupShapes.add(figure);
     }
 
-
     @Override
     public void move(double dx, double dy) {
         for (Figure groupShape : groupShapes) {
             groupShape.move(dx, dy);
+        }
+        setXY();
+    }
+
+    @Override
+    public void rotate(double dAngle) {
+        for (Figure groupShape : groupShapes) {
+            double dx = groupShape.getX() - x;
+            double dy = groupShape.getY() - y;
+            double angleS = Math.atan(dy / dx);
+            double line = Math.sqrt(dx*dx + dy*dy);
+            if ((dx > 0 && dy > 0) || (dx > 0 && dy < 0)) {
+                groupShape.setX(x + line * Math.cos(angleS - dAngle));
+                groupShape.setY(y + line * Math.sin(angleS - dAngle));
+            } else {
+                groupShape.setX(x + line * Math.cos(angleS - dAngle - Math.PI));
+                groupShape.setY(y + line * Math.sin(angleS - dAngle - Math.PI));
+            }
+            groupShape.rotate(dAngle);
         }
     }
 
     @Override
     public void draw(Boolean fill) {
         for (Figure groupShape : groupShapes) groupShape.draw(fill);
+        if (fill) {
+            Shape center1 = new Square(gc, x, y, 3, 0);
+            Shape center2 = new Ball(gc, x, y, 1, 0);
+            center1.draw(true);
+            center2.draw(true);
+        }
     }
 
     /* This method must be changed */
@@ -58,6 +81,7 @@ public class Group extends Figure {
     @Override
     public Boolean add(Figure figure) {
         groupShapes.add(figure);
+        setXY();
         return true;
     }
 
@@ -80,6 +104,29 @@ public class Group extends Figure {
         info.addProperty("Y", y);
         info.addProperty("size", size);
         return info.toString();
+    }
+
+    @Override
+    public double getWeight() {
+        double weight = 0;
+        for (Figure groupShape : groupShapes) {
+            weight += groupShape.getWeight();
+        }
+        return weight;
+    }
+
+    /**
+     * Calculates the center of mass
+     */
+    private void setXY() {
+        x = 0;
+        y = 0;
+        for (Figure groupShape : groupShapes) {
+            x += groupShape.getX() * groupShape.getWeight();
+            y += groupShape.getY() * groupShape.getWeight();
+        }
+        x /= getWeight();
+        y /= getWeight();
     }
 
 }

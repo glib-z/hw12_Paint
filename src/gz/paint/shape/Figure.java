@@ -60,6 +60,16 @@ public abstract class Figure implements Shape {
     }
 
     @Override
+    public void setX(double newX) {
+        this.x = newX;
+    }
+
+    @Override
+    public void setY(double NewY) {
+        this.y = NewY;
+    }
+
+    @Override
     public double getSize() {
         return size;
     }
@@ -77,5 +87,8 @@ public abstract class Figure implements Shape {
 
     @Override
     public abstract java.lang.String getShapeInfo();
+
+    @Override
+    public abstract double getWeight();
 
 }
