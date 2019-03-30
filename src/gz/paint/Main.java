@@ -17,6 +17,8 @@
 
 package gz.paint;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -25,6 +27,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import gz.paint.utills.Logger;
 
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class Main extends Application {

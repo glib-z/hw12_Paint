@@ -65,4 +65,13 @@ public class Ball extends Figure {
     }
 
 
+    @Override
+    public String toString() {
+        return "Ball{" +
+                ", x=" + x +
+                ", y=" + y +
+                ", size=" + size +
+                ", angle=" + angle +
+                '}';
+    }
 }

@@ -74,4 +74,13 @@ public class Square extends Figure {
         return size * size;
     }
 
+    @Override
+    public String toString() {
+        return "Square{" +
+                "x=" + x +
+                ", y=" + y +
+                ", size=" + size +
+                ", angle=" + angle +
+                '}';
+    }
 }

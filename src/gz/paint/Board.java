@@ -1,6 +1,9 @@
 package gz.paint;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import gz.paint.shape.*;
+import gz.paint.utills.Save;
 import javafx.scene.canvas.GraphicsContext;
 import java.io.*;
 import java.util.ArrayList;
@@ -177,7 +180,7 @@ class Board {
     }
 
     void saveBoardInfo() throws IOException {
-        String boardInfo = new String();
+/*        String boardInfo = new String();
         for (Figure shape : shapes) {
             if (shape.getShapeID() != 0) {
                 boardInfo += shape.getShapeInfo();
@@ -193,6 +196,17 @@ class Board {
         FileWriter f = new FileWriter("save.txt");
         f.write(boardInfo);
         f.close();
+*/
+
+        Save save = new Save(activeIndex, shapes);
+        System.out.println(save);
+        Gson gson = new Gson();
+        //Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json = gson.toJson(save);
+        FileWriter f = new FileWriter("save.txt");
+        f.write(json);
+        f.close();
+
     }
 
 }

@@ -49,6 +49,7 @@ public class Group extends Figure {
     @Override
     public void draw(Boolean fill) {
         for (Figure groupShape : groupShapes) groupShape.draw(fill);
+        // Drawing the center of mass if group is active
         if (fill) {
             Shape center1 = new Square(gc, x, y, 3, 0);
             Shape center2 = new Ball(gc, x, y, 1, 0);
@@ -57,11 +58,13 @@ public class Group extends Figure {
         }
     }
 
-    /* This method must be changed */
     @Override
     public void zoom(double ds) {
         for (Figure groupShape : groupShapes) {
             groupShape.zoom(ds);
+            // Changing position of the shape in the group
+            groupShape.setX(x + (groupShape.getX() - x) * ds);
+            groupShape.setY(y + (groupShape.getY() - y) * ds);
         }
     }
 
@@ -129,4 +132,10 @@ public class Group extends Figure {
         y /= getWeight();
     }
 
+    @Override
+    public String toString() {
+        return "Group{" +
+                "groupShapes=" + groupShapes +
+                '}';
+    }
 }

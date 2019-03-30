@@ -82,4 +82,13 @@ public class Triangle extends Figure {
         return size * size * Math.sin(Math.PI / 6);
     }
 
+    @Override
+    public String toString() {
+        return "Triangle{" +
+                "x=" + x +
+                ", y=" + y +
+                ", size=" + size +
+                ", angle=" + angle +
+                '}';
+    }
 }
