@@ -4,6 +4,8 @@ import com.google.gson.JsonObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+import java.util.List;
+
 public class Triangle extends Figure {
 
     private static final short FIGCODE = 3;
@@ -65,16 +67,6 @@ public class Triangle extends Figure {
     @Override
     public Figure getShape(int index) {
         return null;
-    }
-
-    @Override
-    public java.lang.String getShapeInfo() {
-        JsonObject info = new JsonObject();
-        info.addProperty("shapeID", FIGCODE);
-        info.addProperty("X", x);
-        info.addProperty("Y", y);
-        info.addProperty("size", size);
-        return info.toString();
     }
 
     @Override

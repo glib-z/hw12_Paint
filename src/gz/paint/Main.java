@@ -76,7 +76,7 @@ public class Main extends Application {
                 case DOWN:                                  // Move down
                     board.move(0, SPEED);
                     break;
-                case R:                                     // Rotate
+                case R:                                     // Rotate counterclockwise
                     board.rotate(DANGLE);
                     break;
                 case F:                                     // Rotate clockwise
@@ -104,11 +104,10 @@ public class Main extends Application {
                     board.delete();
                     break;
                 case S:                                     // Save Board info
-                    try {
-                        board.saveBoardInfo();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    board.saveBoardInfo();
+                    break;
+                case X:
+                    board.split();
                     break;
             }
 

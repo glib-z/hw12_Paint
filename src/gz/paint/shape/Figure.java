@@ -2,6 +2,8 @@ package gz.paint.shape;
 
 import javafx.scene.canvas.GraphicsContext;
 
+import java.util.List;
+
 public abstract class Figure implements Shape {
 
     GraphicsContext gc;
@@ -65,8 +67,8 @@ public abstract class Figure implements Shape {
     }
 
     @Override
-    public void setY(double NewY) {
-        this.y = NewY;
+    public void setY(double newY) {
+        this.y = newY;
     }
 
     @Override
@@ -84,9 +86,6 @@ public abstract class Figure implements Shape {
 
     @Override
     public abstract Figure getShape(int index);
-
-    @Override
-    public abstract java.lang.String getShapeInfo();
 
     @Override
     public abstract double getWeight();

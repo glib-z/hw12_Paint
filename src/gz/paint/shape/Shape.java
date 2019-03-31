@@ -73,9 +73,9 @@ public interface Shape {
 
     /**
      * Set new Y-position of shape.
-     * @param NewY new Y-position of shape
+     * @param newY new Y-position of shape
      */
-    void setY(double NewY);
+    void setY(double newY);
 
     /**
      * Returns size of the shape. For Set of shapes value is not actual.
@@ -98,12 +98,6 @@ public interface Shape {
      * @return pointer to the shape with specified index in the Group.
      */
     Figure getShape(int index);
-
-    /**
-     *
-     * @return
-     */
-    java.lang.String getShapeInfo();
 
     /**
      * Returns value of weight for the shape.

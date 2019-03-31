@@ -1,7 +1,6 @@
 package gz.paint;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import gz.paint.shape.*;
 import gz.paint.utills.Save;
 import javafx.scene.canvas.GraphicsContext;
@@ -116,7 +115,7 @@ class Board {
                 activeIndex = shapes.size() - 1;                                // New activeIndex
             } else {
                 if ((activeID == 0) && (pointedID == 0)) {
-                    copyGroup(pointedIndex);         // Copying of all figures from the pointed Group to the active Group
+                    copyGroup(shapes.get(pointedIndex), shapes.get(activeIndex));         // Copying of all figures from the pointed Group to the active Group
                 } else {
                     if (activeID != 0) {
                         int i = activeIndex;
@@ -151,7 +150,7 @@ class Board {
                     break;
                 case 0: /* Set of shapes */
                     shapes.add(new Group(gc, 0, 0, 0, 0));        // Creating a new empty Group
-                    copyGroup(pointedIndex);
+                    copyGroup(shapes.get(pointedIndex), shapes.get(activeIndex));
                     break;
             }
             shapes.get(activeIndex).move(3, 3);
@@ -159,54 +158,69 @@ class Board {
         draw();
     }
 
-    private void copyGroup(int pIndex) {
-        for (int i = 0; i < shapes.get(pIndex).getPullSize(); i++) {
-            double cX = shapes.get(pIndex).getShape(i).getX();
-            double cY = shapes.get(pIndex).getShape(i).getY();
-            double cSize = shapes.get(pIndex).getShape(i).getSize();
-            double cAngle = shapes.get(pIndex).getAngle();
-            switch (shapes.get(pIndex).getShape(i).getShapeID()) {
+    private void copyGroup(Shape source, Shape target) {
+        for (int i = 0; i < source.getPullSize(); i++) {
+            double cX = source.getShape(i).getX();
+            double cY = source.getShape(i).getY();
+            double cSize = source.getShape(i).getSize();
+            double cAngle = source.getShape(i).getAngle();
+            switch (source.getShape(i).getShapeID()) {
                 case 1:
-                    shapes.get(activeIndex).add(new Ball(gc, cX, cY, cSize, cAngle));
+                    target.add(new Ball(gc, cX, cY, cSize, cAngle));
                     break;
                 case 2:
-                    shapes.get(activeIndex).add(new Square(gc, cX, cY, cSize, cAngle));
+                    target.add(new Square(gc, cX, cY, cSize, cAngle));
                     break;
                 case 3:
-                    shapes.get(activeIndex).add(new Triangle(gc, cX, cY, cSize, cAngle));
+                    target.add(new Triangle(gc, cX, cY, cSize, cAngle));
                     break;
             }
         }
     }
 
-    void saveBoardInfo() throws IOException {
-/*        String boardInfo = new String();
-        for (Figure shape : shapes) {
-            if (shape.getShapeID() != 0) {
-                boardInfo += shape.getShapeInfo();
-            } else {
-                boardInfo += "{GroupSTART}";
-                for (int k = 0; k < shape.getPullSize(); k++) {
-                    boardInfo += shape.getShape(k).getShapeInfo();
+    /**
+     * Splitting group of shapes
+     */
+    void split() {
+        if ((shapes.size() > 0) && (shapes.get(activeIndex).getShapeID() == 0)) {
+            for (int i = 0; i < shapes.get(activeIndex).getPullSize(); i++) {
+                double cX = shapes.get(activeIndex).getShape(i).getX();
+                double cY = shapes.get(activeIndex).getShape(i).getY();
+                double cSize = shapes.get(activeIndex).getShape(i).getSize();
+                double cAngle = shapes.get(activeIndex).getShape(i).getAngle();
+                switch (shapes.get(activeIndex).getShape(i).getShapeID()) {
+                    case 1:
+                        shapes.add(new Ball(gc, cX, cY, cSize, cAngle));
+                        break;
+                    case 2:
+                        shapes.add(new Square(gc, cX, cY, cSize, cAngle));
+                        break;
+                    case 3:
+                        shapes.add(new Triangle(gc, cX, cY, cSize, cAngle));
+                        break;
                 }
-                boardInfo += "{GroupEND}";
             }
         }
-        System.out.println(boardInfo);
-        FileWriter f = new FileWriter("save.txt");
-        f.write(boardInfo);
-        f.close();
-*/
+        shapes.remove(activeIndex);
+        activeIndex = shapes.size() - 1;
+        draw();
+    }
 
+
+    void saveBoardInfo() {
         Save save = new Save(activeIndex, shapes);
         System.out.println(save);
         Gson gson = new Gson();
-        //Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        //Gson gson = new GsonBuilder().create();
         String json = gson.toJson(save);
-        FileWriter f = new FileWriter("save.txt");
-        f.write(json);
-        f.close();
-
+        FileWriter f = null;
+        try {
+            f = new FileWriter("save.txt");
+            f.write(json);
+            f.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
